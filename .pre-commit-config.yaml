@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 23.1.0
+    hooks:
+    - id: black
+      language_version: python3.10
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.1.0
+    hooks:
+      - id: flake8
+      - id: requirements-txt-fixer
+      - id: check-docstring-first
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.1.1
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-PyYAML==6.0.12.9]
+        exclude: model.py
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-use-type-annotations
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+    hooks:
+    -   id: isort
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.7.0
+    hooks:
+    - id: nbqa-black
+      additional_dependencies: [black==20.8b1]
+    - id: nbqa-pyupgrade
+      additional_dependencies: [pyupgrade==2.7.3]
+    - id: nbqa-isort
+      additional_dependencies: [isort==5.6.4]

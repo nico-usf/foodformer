@@ -1,4 +1,9 @@
-transformers
 datasets
-torchmetrics 
+fastapi
+loguru
+numpy
+pre-commitpydantic
 pytorch-lightning
+torchmetrics 
+transformers
+uvicorn[standard]
