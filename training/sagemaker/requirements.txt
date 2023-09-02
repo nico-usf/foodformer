@@ -1,0 +1,3 @@
+datasets
+pytorch-lightningtorchmetrics 
+transformers
