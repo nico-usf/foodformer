@@ -1,6 +1,7 @@
-# MSDS - MLOps course
+# MSDS - MLOps course - Foodformer <img src="./images/foodformer_logo.jpeg" alt="foodformer_logo" width="20"/>
 
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-31011/)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nico-usf/foodformer)
 
 ## Development
 
@@ -8,6 +9,7 @@ To setup this repo locally, create a virtual environment (e.g. with [PyEnv](http
 
 ```bash
 brew install pyenv
+pyenv init
 pyenv install -s 3.10.10
 pyenv virtualenv 3.10.10 foodformer
 pyenv activate foodformer

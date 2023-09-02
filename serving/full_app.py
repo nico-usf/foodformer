@@ -1,11 +1,16 @@
 from functools import partial
 from io import BytesIO
+from typing import TYPE_CHECKING
 
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from loguru import logger
 from PIL import Image
-from transformers import ViTForImageClassification, ViTImageProcessor
+from transformers import ViTImageProcessor
+
+if TYPE_CHECKING:
+    from torch import tensor
+
 
 labels = [
     "apple_pie",
@@ -111,43 +116,39 @@ labels = [
     "waffles",
 ]
 
-
 model_name_or_path = "google/vit-base-patch16-224-in21k"
 feature_extractor = ViTImageProcessor.from_pretrained(model_name_or_path)
-model = ViTForImageClassification.from_pretrained(
-    model_name_or_path,
-    num_labels=len(labels),
-    id2label={str(i): c for i, c in enumerate(labels)},
-    label2id={c: str(i) for i, c in enumerate(labels)},
-)
 preprocessor = partial(feature_extractor, return_tensors="pt")
 
+#####
+# Exercise: Write the model loading code.
+#####
 
 app = FastAPI()
 
 
-def preprocess_image(image: Image.Image):
+def preprocess_image(image: Image.Image) -> tensor:
     return preprocessor([image])["pixel_values"]
 
 
-def read_imagefile(file) -> Image.Image:
+def read_imagefile(file: File) -> Image.Image:
     image = Image.open(BytesIO(file))
     return image
 
 
-@app.post("/predict")
-async def predict_api(file: UploadFile = File(...)):
-    ###################
-    # Fill in this part
-    ###################
-    pass
-
-
 @app.get("/")
-def healthcheck():
+def healthcheck() -> dict:
     logger.info("Received request on the root endpoint")
     return {"status": "ok"}
 
 
+@app.post("/predict")
+async def predict_api(file: UploadFile = File(...)):
+    #####
+    # Exercise: Write the prediction endpoint, following the signature defined above.
+    #####
+    pass
+
+
 if __name__ == "__main__":
-    uvicorn.run(app, debug=True)
+    uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)

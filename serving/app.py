@@ -24,8 +24,8 @@ def read_root() -> dict:
 
 
 @app.post("/predict", response_model=TypedResponse)
-async def translate(request: TypedRequest) -> TypedResponse:
-    logger.info(f"translate endpoint received request: {request}")
+async def predict(request: TypedRequest) -> TypedResponse:
+    logger.info(f"predict endpoint received request: {request}")
     request_strings = request.strings
     response = {"data": [f"{s}_response" for s in request_strings]}
     return TypedResponse(**response)
