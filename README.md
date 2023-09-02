@@ -25,5 +25,5 @@ pre-commit install
 
 You can use API platforms like Postman or Insomnia, the command-line tool `curl`.
 
-- for the healthcheck endpoint: `curl http://localhost:8000` 
+- for the healthcheck endpoint: `curl http://localhost:8000`
 - for a post endpoint called `predict`: `curl -X POST "http://localhost:8000/predict" -H "accept: application/json" -H  "Content-Type: application/json" -d "{\"key\":\"value\",\"other_key\":\"other_value\"}"`

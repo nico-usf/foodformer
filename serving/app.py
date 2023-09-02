@@ -18,7 +18,7 @@ class TypedResponse(BaseModel):
 
 
 @app.get("/")
-def read_root():
+def read_root() -> dict:
     logger.info("Received request on the root endpoint")
     return {"status": "ok"}
 
@@ -32,4 +32,4 @@ async def translate(request: TypedRequest) -> TypedResponse:
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8080, debug=True)
+    uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)
