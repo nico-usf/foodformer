@@ -2,7 +2,9 @@ datasets
 fastapi
 loguru
 numpy
+Pillow
 pre-commitpydantic
+python-multipart
 pytorch-lightning
 torchmetrics 
 transformers
