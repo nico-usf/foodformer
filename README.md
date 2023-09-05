@@ -29,3 +29,12 @@ You can use API platforms like Postman or Insomnia, the command-line tool `curl`
 
 - for the healthcheck endpoint: `curl http://localhost:8000`
 - for a post endpoint called `predict`: `curl -X POST "http://localhost:8000/predict" -H "accept: application/json" -H  "Content-Type: application/json" -d "{\"key\":\"value\",\"other_key\":\"other_value\"}"`
+
+## Deployment to AWS Lambda
+
+- Build the dockerfile: `docker build -t foodformer .`
+- Fetch and store your AWS account id: `export aws_account_id=$(aws sts get-caller-identity --query "Account" --output text)`
+- Authenticate with AWS ECR: `aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.us-east-2.amazonaws.com` -> You should see the following message: "Login Succeeded"
+- Create a repo in ECR: `aws ecr create-repository --repository-name foodformer --image-scanning-configuration scanOnPush=true --region us-east-2`
+- Tag and push you Docker image: `docker tag foodformer:latest $aws_account_id.dkr.ecr.us-east-2.amazonaws.com/foodformer` followed by `docker push $aws_account_id.dkr.ecr.us-east-2.amazonaws.com/foodformer` (this command will take a while, it's uploading the entire Docker image to ECR).
+-

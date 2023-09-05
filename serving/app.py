@@ -1,5 +1,6 @@
 from functools import partial
 from io import BytesIO
+from pathlib import Path
 
 import torch
 import uvicorn
@@ -31,10 +32,12 @@ def read_imagefile(file: bytes) -> Image.Image:
     return Image.open(BytesIO(file))
 
 
-MODEL_PATH = "/Users/nthiebaut/Downloads/model.ckpt"
+package_path = Path(__file__).parent.parent
+
+MODEL_PATH = package_path / "models/model.ckpt"
 
 
-def load_model(model_path: str = MODEL_PATH) -> torch.nn.Module:
+def load_model(model_path: str | Path = MODEL_PATH) -> torch.nn.Module:
     checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
     model = checkpoint["hyper_parameters"]["model"]
     labels = checkpoint["hyper_parameters"]["label_names"]
