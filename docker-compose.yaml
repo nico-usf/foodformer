@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  foodformer:
+    build: .
+    image: foodformer
+    container_name: foodformer-container
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+    tty: true
+    volumes:
+      - ./app:/code/app
+    # entrypoint: /bin/sh -c
+    command:
+      uvicorn serving.app:app --host 0.0.0.0 --port 8080
+      # ["uvicorn", "serving.app:app", "--host", "0.0.0.0", "--port", "8080"]

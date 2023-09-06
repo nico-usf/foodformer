@@ -2,6 +2,7 @@ datasets
 fastapi
 gradio
 loguru
+mangum
 numpy
 Pillow
 pre-commit

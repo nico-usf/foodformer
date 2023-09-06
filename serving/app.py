@@ -18,7 +18,6 @@ class ClassPredictions(BaseModel):
 
 app = FastAPI()
 
-
 model_name_or_path = "google/vit-base-patch16-224-in21k"
 feature_extractor = ViTImageProcessor.from_pretrained(model_name_or_path)
 preprocessor = partial(feature_extractor, return_tensors="pt")
@@ -32,9 +31,13 @@ def read_imagefile(file: bytes) -> Image.Image:
     return Image.open(BytesIO(file))
 
 
-package_path = Path(__file__).parent.parent
+# package_path = Path(__file__).parent.parent
 
-MODEL_PATH = package_path / "models/model.ckpt"
+# MODEL_PATH = package_path / "models/model.ckpt"
+
+package_path = Path(__file__).parent
+
+MODEL_PATH = package_path / "model.ckpt"
 
 
 def load_model(model_path: str | Path = MODEL_PATH) -> torch.nn.Module:
@@ -80,4 +83,4 @@ async def predict_api(file: UploadFile = File(...)) -> ClassPredictions:
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app:app", host="0.0.0.0", port=8080, reload=True)
