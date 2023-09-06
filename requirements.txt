@@ -1,8 +1,13 @@
 datasets
 fastapi
+gradio
 loguru
+mangum
 numpy
-pre-commitpydantic
+Pillow
+pre-commit
+pydantic
+python-multipart
 pytorch-lightning
 torchmetrics 
 transformers
