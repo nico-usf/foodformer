@@ -38,10 +38,20 @@ curl -X 'POST' \
   -F 'file=@image.jpg;type=image/jpeg'
 ```
 
-## Deployment to AWS Lambda
+## Deployment to AWS Fargate
+
+Fargate is a serverless deployment solution for Docker containers.
+
+### Build and push the Docker image
+
+In a terminal:
 
 - Build the dockerfile: `docker build -t foodformer .`
-- Fetch and store your AWS account id: `export aws_account_id=$(aws sts get-caller-identity --query "Account" --output text)`
-- Authenticate with AWS ECR: `aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.us-east-2.amazonaws.com` -> You should see the following message: "Login Succeeded"
-- Create a repo in ECR: `aws ecr create-repository --repository-name foodformer --image-scanning-configuration scanOnPush=true --region us-east-2`
-- Tag and push you Docker image: `docker tag foodformer:latest $aws_account_id.dkr.ecr.us-east-2.amazonaws.com/foodformer` followed by `docker push $aws_account_id.dkr.ecr.us-east-2.amazonaws.com/foodformer` (this command will take a while, it's uploading the entire Docker image to ECR).
+- Fetch and store your AWS account id and AWS region: `export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text) && export AWS_REGION='us-east-2'`
+- Authenticate with AWS ECR: `aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com` -> You should see the following message: "Login Succeeded"
+- Create a repo in ECR: `aws ecr create-repository --repository-name foodformer --image-scanning-configuration scanOnPush=true --region $AWS_REGION`
+- Tag and push you Docker image: `docker tag foodformer:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/foodformer` followed by `docker push $AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/foodformer` (this command will take a while, it's uploading the entire Docker image to ECR).
+
+### Deployed API container wit Fargate
+
+Follow [this guide](https://app.tango.us/app/workflow/Creating-and-Deploying-an-ECS-Cluster-for-Foodformer-Application-7ede665f523044ec93f0239ad24f41a5).
