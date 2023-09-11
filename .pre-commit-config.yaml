@@ -21,7 +21,7 @@ repos:
     hooks:
       - id: python-use-type-annotations
   - repo: https://github.com/pycqa/isort
-    rev: 5.11.2
+    rev: 5.12.0
     hooks:
       - id: isort
         name: isort (python)
@@ -29,7 +29,7 @@ repos:
     rev: 1.7.0
     hooks:
     - id: nbqa-black
-      additional_dependencies: [black==20.8b1]
+      additional_dependencies: [black==23.1.0]
     - id: nbqa-pyupgrade
       additional_dependencies: [pyupgrade==2.7.3]
     - id: nbqa-isort
