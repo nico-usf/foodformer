@@ -1,0 +1,13 @@
+datasets==2.14.4
+fastapi==0.103.0
+gradio==3.42.0
+loguru==0.7.0
+numpy==1.24.3
+Pillow==10.0.0
+pre-commit==3.3.3
+pydantic==2.3.0
+python-multipart==0.0.6
+pytorch-lightning==2.0.8
+torchmetrics==1.1.1
+transformers==4.32.1
+uvicorn==0.23.2
