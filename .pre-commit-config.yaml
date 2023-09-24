@@ -14,7 +14,7 @@ repos:
     rev: v1.1.1
     hooks:
       - id: mypy
-        additional_dependencies: [types-PyYAML==6.0.12.9]
+        additional_dependencies: [types-PyYAML==6.0.12.9, types-requests==2.31.0.4]
         exclude: model.py
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
