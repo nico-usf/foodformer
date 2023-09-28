@@ -16,7 +16,7 @@ The goal of this project is to create a food classification app powered by a Vis
 
 Here is the complete architecture diagram with tools icons:
 
-<img src="./images/architecture.svg" width="400" height="400" alt="Architecture Diagram">
+<img src="./images/architecture_foodformer.svg" width="600" height="600" alt="Architecture Diagram">
 
 ## Development
 
