@@ -1,3 +1,5 @@
+import json
+import sys
 from functools import partial
 from io import BytesIO
 from pathlib import Path
@@ -18,6 +20,10 @@ class ClassPredictions(BaseModel):
 
 app = FastAPI()
 
+logger.remove()
+logger.add(sys.stderr, level="INFO", format="{message}", serialize=False)
+logger.info("Starting API, model version v0...")
+
 model_name_or_path = "google/vit-base-patch16-224-in21k"
 feature_extractor = ViTImageProcessor.from_pretrained(model_name_or_path)
 preprocessor = partial(feature_extractor, return_tensors="pt")
@@ -31,13 +37,9 @@ def read_imagefile(file: bytes) -> Image.Image:
     return Image.open(BytesIO(file))
 
 
-# package_path = Path(__file__).parent.parent
+current_folder = Path(__file__).parent
 
-# MODEL_PATH = package_path / "models/model.ckpt"
-
-package_path = Path(__file__).parent
-
-MODEL_PATH = package_path / "model.ckpt"
+MODEL_PATH = current_folder / "model.ckpt"
 
 
 def load_model(model_path: str | Path = MODEL_PATH) -> torch.nn.Module:
@@ -76,10 +78,16 @@ async def predict_api(file: UploadFile = File(...)) -> ClassPredictions:
         raise TypeError(
             f"File extension for {file.filename} should be one of {valid_extensions}"
         )
+    ### EXERCISE: read the image from the input `file` object,
+    ### then preprocess the input and compute model predictions ###
 
-    image = read_imagefile(await file.read())
-    x = preprocess_image(image)
-    return ClassPredictions(predictions=predict(x))
+    log = {
+        "message": f"Predictions for {file.filename}: {predictions}",
+        "top_class": list(predictions.keys())[0],
+        "score": list(predictions.values())[0],
+    }
+    logger.info(json.dumps(log))
+    return ClassPredictions(predictions=predictions)
 
 
 if __name__ == "__main__":
