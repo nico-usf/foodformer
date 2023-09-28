@@ -2,9 +2,21 @@
 
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-31011/)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nico-usf/foodformer)
-[![Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nico-usf/foodformer)
 
 Home of the Foodformer MLOps project for the [MLOps course the Masters of Science in Data Science of the University of San Francisco](https://catalog.usfca.edu/preview_course_nopop.php?catoid=38&coid=562876).
+
+The goal of this project is to create a food classification app powered by a Vision Transformer. The repo showcases several MLOps concepts:
+- Model development on GPU instances with AWS SageMaker
+- Experiment tracking and artifacts management with Weights & Biases
+- API development (FastAPI, Docker) and deployment (AWS Fargate, AWS ECR)
+- Setting up a demo environment with GradIO
+- Continuous Deployment with GitHub Actions
+- Operational and functional monitoring with Grafana
+- Load testing with Locust
+
+Here is the complete architecture diagram with tools icons:
+
+<img src="./images/architecture.svg" width="400" height="400" alt="Architecture Diagram">
 
 ## Development
 
