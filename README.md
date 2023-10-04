@@ -3,20 +3,18 @@
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-31011/)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nico-usf/foodformer)
 
-Home of the Foodformer MLOps project for the [MLOps course the Masters of Science in Data Science of the University of San Francisco](https://catalog.usfca.edu/preview_course_nopop.php?catoid=38&coid=562876).
-
-The goal of this project is to create a food classification app powered by a Vision Transformer. The repo showcases several MLOps concepts:
-- Model development on GPU instances with AWS SageMaker
-- Experiment tracking and artifacts management with Weights & Biases
-- API development (FastAPI, Docker) and deployment (AWS Fargate, AWS ECR)
-- Setting up a demo environment with GradIO
-- Continuous Deployment with GitHub Actions
-- Operational and functional monitoring with Grafana
-- Load testing with Locust
+Home of the Foodformer MLOps project. The goal of this project is to create a food classification app powered by a Vision Transformer. The repo showcases several MLOps concepts:
+- 👩‍💻 Model development on GPU instances with [AWS SageMaker](https://aws.amazon.com/sagemaker/)
+- 🧪 Experiment tracking and artifacts management with [Weights & Biases](https://wandb.ai/site)
+- 🚀 API development ([FastAPI](https://fastapi.tiangolo.com/), [Docker](https://www.docker.com/)) and deployment ([AWS Fargate](https://aws.amazon.com/fargate/), [AWS ECR](https://aws.amazon.com/ecr/))
+- 🖼️ Setting up a demo environment with [GradIO](https://www.gradio.app/)
+- ⚙️ Continuous Deployment with [GitHub Actions](https://github.com/features/actions)
+- 🖥️ Operational and functional monitoring with [Grafana](https://grafana.com/)
+- 🏋️ Load testing with [Locust](https://locust.io/)
 
 Here is the complete architecture diagram with tools icons:
 
-<img src="./images/architecture_foodformer.svg" width="600" height="600" alt="Architecture Diagram">
+<img src="./images/architecture_foodformer.svg" width="600" height="400" alt="Architecture Diagram">
 
 ## Development
 
@@ -30,7 +28,7 @@ I recommend creating a virtual environment, see intructions [in the FAQ section]
 You can use API platforms like Postman or Insomnia, the Swagger interface of the API (http://localhost:8080/docs), or the command-line tool `curl`:
 
 - for the healthcheck endpoint: `curl http://localhost:8080`
-- for a post endpoint called `predict`:
+- for a post endpoint called `predict`, with an image called `image.jpg` in the current working directory:
 
 ```bash
 curl -X 'POST' \
@@ -44,8 +42,8 @@ curl -X 'POST' \
 
 Fargate is a serverless deployment solution for Docker containers. Deploying a Docker image to Fargate requires uploading the image to a registry like AWS ECR. While redeployments are automated through GH Actions, initially creating the Fargate service requires following the instructions below.
 
-### Build and push the Docker image
-
+### Build and push the Docker image manually
+ 
 In a terminal:
 
 - Build the dockerfile: `docker build -t foodformer .`
@@ -56,10 +54,13 @@ In a terminal:
 
 ### Deploy API container with Fargate
 
-Follow [this guide](https://app.tango.us/app/workflow/Creating-and-Deploying-an-ECS-Cluster-for-Foodformer-Application-7ede665f523044ec93f0239ad24f41a5) to create the required services in the AWS Console.
-
+Follow [this guide](./guides/fargate/create-cluster-and-task.md) to create the required services in the AWS Console.
 
 ## FAQ
+
+### What is this project?
+
+This project is part of the [MLOps course the Masters of Science in Data Science of the University of San Francisco](https://catalog.usfca.edu/preview_course_nopop.php?catoid=38&coid=562876).
 
 ### How to create a virtual environment?
 
