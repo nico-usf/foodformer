@@ -16,6 +16,11 @@ Here is the complete architecture diagram with tools icons:
 
 <img src="./images/architecture_foodformer.svg" width="600" height="400" alt="Architecture Diagram">
 
+and the different visual interfaces to the model:
+
+<img src="./images/foodformer_interfaces.png" width="600" height="400" alt="Interfaces">
+
+
 ## Development
 
 To setup this repo locally, run `./setup.sh`, it will simply install the dependencies and pre-commit hooks. 
@@ -76,3 +81,11 @@ pyenv local foodformer
 ```
 
 Pyenv will automatically load the correct virtual environment when you `cd` into this directory, by reading the `.python-version` file created by the `pyenv local` step.
+
+### How to host the Locust load testing app in the cloud?
+
+One of the simplest and cheapest ways to deploy a lightweight container to the cloud is to use [fly.io](https://fly.io/). Sign-up, then run `fly deploy` from `load_testing` folder.
+
+### How to deploy the demo?
+
+When running from your laptop, you can share it publicly by adding `share=True` to the parameters of the `launch()` command. To create a persist demo, you can follow [this short guide](https://www.gradio.app/guides/sharing-your-app#hosting-on-hf-spaces) to host it on HuggingFace Spaces. 
