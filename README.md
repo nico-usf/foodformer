@@ -61,6 +61,11 @@ In a terminal:
 
 Follow [this guide](./guides/fargate/create-cluster-and-task.md) to create the required services in the AWS Console.
 
+## Next Steps
+- Canary Deployment and A/B tests: create a new GH Action and setup a Load Balancer in AWS to unlock canary deployments
+- Auto-scaling: change the settings in AWS ECS to enable inference auto-scaling.
+- Serverless GPU: replace Fargate serving with [AWS SageMaker Serverless Inference]([url](https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html))
+- 
 ## FAQ
 
 ### What is this project?
