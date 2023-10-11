@@ -65,7 +65,9 @@ Follow [this guide](./guides/fargate/create-cluster-and-task.md) to create the r
 - Canary Deployment and A/B tests: create a new GH Action and setup a Load Balancer in AWS to unlock canary deployments
 - Auto-scaling: change the settings in AWS ECS to enable inference auto-scaling.
 - Serverless GPU: replace Fargate serving with [AWS SageMaker Serverless Inference]([url](https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html))
-- 
+- Automated model redeployment from W&B tags: add deployment Action to redeploy the model upon tagging artifacts in W&B, using webhooks and following [this guide](https://docs.wandb.ai/guides/model_registry/automation).
+- Add tests and corresponding GH Action
+
 ## FAQ
 
 ### What is this project?
