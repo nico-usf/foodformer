@@ -95,4 +95,4 @@ One of the simplest and cheapest ways to deploy a lightweight container to the c
 
 ### How to deploy the demo?
 
-When running from your laptop, you can share it publicly by adding `share=True` to the parameters of the `launch()` command. To create a persist demo, you can follow [this short guide](https://www.gradio.app/guides/sharing-your-app#hosting-on-hf-spaces) to host it on HuggingFace Spaces. 
+When running from your laptop, you can share it publicly by adding `share=True` to the parameters of the `launch()` command. To create a persisting demo, you can follow [this short guide](https://www.gradio.app/guides/sharing-your-app#hosting-on-hf-spaces) to host it on HuggingFace Spaces. 
