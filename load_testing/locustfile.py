@@ -7,7 +7,7 @@ from locust.env import Environment
 # Run this in Docker with the following command:
 # docker run -p 8089:8089 -v $PWD:/mnt/locust locustio/locust -f /mnt/locust/locustfile.py  # noqa: E501
 
-IMAGES_FOLDER = "/Your/Local/Images/Folder"
+IMAGES_FOLDER = "./load_test_data"
 
 
 @events.init.add_listener
@@ -28,8 +28,11 @@ class QuickstartUser(HttpUser):
     def call_predict(self) -> None:
         filename = self.get_random_image_filename()
         image_path = f"{IMAGES_FOLDER}/{filename}"
-        ### EXERCISE: send a request to the /predict endpoint using ###
-        ### Locust's self.client object ###
+        self.client.post(
+            "/predict",
+            data={},
+            files=[("file", (filename, open(image_path, "rb"), "image/jpeg"))],
+        )
 
     def get_random_image_filename(self) -> str:
         return random.choice(self.environment.filenames)

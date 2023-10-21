@@ -1,8 +1,10 @@
 FROM locustio/locust
 
-RUN pip install datasets
-RUN python download_and_prepare_dataset.py
-COPY /path/to/your/local/dataset /dataset
-COPY locustfile.py /locustfile.py
+RUN pip install datasets Pillow
 
-CMD ["-f", "/locustfile.py"]
+WORKDIR /home/locust
+COPY download_and_prepare_dataset.py .
+RUN python download_and_prepare_dataset.py
+COPY locustfile.py .
+
+CMD ["-f", "/home/locust/locustfile.py"]

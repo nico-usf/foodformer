@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 import argparse
 import logging
 import os
@@ -110,7 +111,8 @@ if __name__ == "__main__":
 
     preprocessor = partial(feature_extractor, return_tensors="pt")
     print(
-        f'{os.environ["SM_CHANNEL_TRAIN"]} content: {os.listdir(os.environ["SM_CHANNEL_TRAIN"])}'
+        f'{os.environ["SM_CHANNEL_TRAIN"]} content: '
+        f'{os.listdir(os.environ["SM_CHANNEL_TRAIN"])}'
     )
     train_ds = Food101(
         root=os.environ["SM_CHANNEL_TRAIN"], split="train", transform=preprocessor
