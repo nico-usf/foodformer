@@ -1,12 +1,12 @@
-import json
-import sys
+import os
 from functools import partial
 from io import BytesIO
 from pathlib import Path
 
 import torch
 import uvicorn
-from fastapi import FastAPI, File, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, status
+from fastapi.security import OAuth2PasswordBearer
 from loguru import logger
 from PIL import Image
 from pydantic import BaseModel
@@ -18,11 +18,22 @@ class ClassPredictions(BaseModel):
     predictions: dict[str, float]
 
 
-app = FastAPI()
-
-logger.remove()
-logger.add(sys.stderr, level="INFO", format="{message}", serialize=False)
+# Deactivating docs
+# see https://github.com/tiangolo/fastapi/issues/364#issuecomment-789711477
+# for how to protect /docs with a username/password combo
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 logger.info("Starting API, model version v0...")
+
+api_keys = [os.environ["FOODFORMER_API_KEY"]]
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+def api_key_auth(api_key: str = Depends(oauth2_scheme)) -> None:
+    if api_key not in api_keys:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Forbidden"
+        )
+
 
 model_name_or_path = "google/vit-base-patch16-224-in21k"
 feature_extractor = ViTImageProcessor.from_pretrained(model_name_or_path)
@@ -62,13 +73,15 @@ def predict(x: torch.tensor, labels: list = labels) -> dict:
     return return_dict
 
 
-@app.get("/")
+@app.get("/", dependencies=[Depends(api_key_auth)])
 def get_root() -> dict:
     logger.info("Received request on the root endpoint")
     return {"status": "ok"}
 
 
-@app.post("/predict", response_model=ClassPredictions)
+@app.post(
+    "/predict", response_model=ClassPredictions, dependencies=[Depends(api_key_auth)]
+)
 async def predict_api(file: UploadFile = File(...)) -> ClassPredictions:
     logger.info(f"Predict endpoint received image {file.filename}")
 
@@ -83,12 +96,7 @@ async def predict_api(file: UploadFile = File(...)) -> ClassPredictions:
     x = preprocess_image(image)
     predictions = predict(x)
 
-    log = {
-        "message": f"Predictions for {file.filename}: {predictions}",
-        "top_class": list(predictions.keys())[0],
-        "score": list(predictions.values())[0],
-    }
-    logger.info(json.dumps(log))
+    logger.info(f"Predictions for {file.filename}: {predictions}")
     return ClassPredictions(predictions=predictions)
 
 

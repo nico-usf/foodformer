@@ -1,28 +1,31 @@
+# mypy: ignore-errors
+import json
+
 import gradio as gr
 import requests
-import tensorflow as tf
 
-inception_net = tf.keras.applications.MobileNetV2()
-
-# Download human-readable labels for ImageNet.
-response = requests.get("https://git.io/JJkYN")
-labels = response.text.split("\n")
+host = "18.188.191.239"
+api_token = ""
 
 
-def classify_image(inp):
-    inp = inp.reshape((-1, 224, 224, 3))
-    inp = tf.keras.applications.mobilenet_v2.preprocess_input(inp)
-    prediction = inception_net.predict(inp).flatten()
-    confidences = {labels[i]: float(prediction[i]) for i in range(1000)}
-    return confidences
+def call_api(filepath, host=host, api_token=api_token):
+    url = f"http://{host}/predict"
+
+    payload = {}
+    files = [("file", ("image.jpg", open(filepath, "rb"), "image/jpeg"))]
+    headers = {"Authorization": f"Bearer {api_token}"}
+
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+    return json.loads(response.text)["predictions"]
 
 
 gr.Interface(
-    fn=classify_image,
+    fn=call_api,
     inputs=gr.Image(
-        shape=(224, 224), source="webcam", label="Upload Image or Capture from Webcam"
+        type="filepath", source="webcam", label="Upload Image or Capture from Webcam"
     ),
     outputs=gr.Label(num_top_classes=3, label="Predicted Class"),
-    examples=["/Users/nthiebaut/Downloads/image.jpg"],
+    examples=["examples/raclette.jpg", "examples/gyoza.jpeg", "examples/macarons.jpeg"],
     live=False,
 ).launch()
