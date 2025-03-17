@@ -1,0 +1,8 @@
+1. AttributeError: module 'pkgutil' has no attribute 'ImpImporter'. Did you mean: 'zipimporter'
+update numpy version
+>pip install numpy==1.26.4
+
+2. pre-commit not found
+>brew install pre-commit
+
+3. update python version in .pre-commit-config.yaml
