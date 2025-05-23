@@ -1,9 +1,10 @@
 # MSDS - MLOps course - Foodformer <img src="./images/foodformer_logo.jpeg" alt="foodformer_logo" width="20"/>
 
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-31011/)
-[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nico-usf/foodformer)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/nkthiebaut/foodformer)
 
 Home of the Foodformer MLOps project. The goal of this project is to create a food classification app powered by a Vision Transformer. The repo showcases several MLOps concepts:
+
 - 👩‍💻 Model development on GPU instances with [AWS SageMaker](https://aws.amazon.com/sagemaker/)
 - 🧪 Experiment tracking and artifacts management with [Weights & Biases](https://wandb.ai/site)
 - 🚀 API development ([FastAPI](https://fastapi.tiangolo.com/), [Docker](https://www.docker.com/)) and deployment ([AWS Fargate](https://aws.amazon.com/fargate/), [AWS ECR](https://aws.amazon.com/ecr/))
@@ -14,19 +15,17 @@ Home of the Foodformer MLOps project. The goal of this project is to create a fo
 
 Here is the complete architecture diagram with tools icons:
 
-<img src="./images/architecture_foodformer.svg" width="600" height="400" alt="Architecture Diagram">
+<img src="./images/architecture_foodformer.png" width="600" height="400" alt="Architecture Diagram">
 
 and the different visual interfaces to the model:
 
 <img src="./images/foodformer_interfaces.png" width="600" height="400" alt="Interfaces">
 
-
 ## Development
 
-To setup this repo locally, run `./setup.sh`, it will simply install the dependencies and pre-commit hooks. 
+To setup this repo locally, run `./setup.sh`, it will simply install the dependencies and pre-commit hooks.
 
 I recommend creating a virtual environment, see intructions [in the FAQ section](#faq).
-
 
 ## Testing the API
 
@@ -48,7 +47,7 @@ curl -X 'POST' \
 Fargate is a serverless deployment solution for Docker containers. Deploying a Docker image to Fargate requires uploading the image to a registry like AWS ECR. While redeployments are automated through GH Actions, initially creating the Fargate service requires following the instructions below.
 
 ### Build and push the Docker image manually
- 
+
 In a terminal:
 
 - Build the dockerfile: `docker build -t foodformer .`
@@ -61,13 +60,6 @@ In a terminal:
 
 Follow [this guide](./guides/fargate/create-cluster-and-task.md) to create the required services in the AWS Console.
 
-## Next Steps
-- Canary Deployment and A/B tests: create a new GH Action and setup a Load Balancer in AWS to unlock canary deployments
-- Auto-scaling: change the settings in AWS ECS to enable inference auto-scaling.
-- Serverless GPU: replace Fargate serving with [AWS SageMaker Serverless Inference]([url](https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html))
-- Automated model redeployment from W&B tags: add deployment Action to redeploy the model upon tagging artifacts in W&B, using webhooks and following [this guide](https://docs.wandb.ai/guides/model_registry/automation).
-- Add tests and corresponding GH Action
-
 ## FAQ
 
 ### What is this project?
@@ -76,7 +68,7 @@ This project is part of the [MLOps course the Masters of Science in Data Science
 
 ### How to create a virtual environment?
 
-With [PyEnv](https://github.com/pyenv/pyenv)) you can run the following (MacOS):
+With [PyEnv](https://github.com/pyenv/pyenv) you can run the following (MacOS):
 
 ```bash
 brew install pyenv
@@ -91,8 +83,8 @@ Pyenv will automatically load the correct virtual environment when you `cd` into
 
 ### How to host the Locust load testing app in the cloud?
 
-One of the simplest and cheapest ways to deploy a lightweight container to the cloud is to use [fly.io](https://fly.io/). Sign-up, then run `fly deploy` from `load_testing` folder.
+One of the simplest and cheapest ways to deploy a lightweight container to the cloud is to use [fly.io](https://fly.io/). Sign-up, then run `fly deploy` from the `load_testing` folder.
 
 ### How to deploy the demo?
 
-When running from your laptop, you can share it publicly by adding `share=True` to the parameters of the `launch()` command. To create a persisting demo, you can follow [this short guide](https://www.gradio.app/guides/sharing-your-app#hosting-on-hf-spaces) to host it on HuggingFace Spaces. 
+When running from your laptop, you can share it publicly by adding `share=True` to the parameters of the `launch()` command. To create a persisted demo, you can follow [this short guide](https://www.gradio.app/guides/sharing-your-app#hosting-on-hf-spaces) to host it on HuggingFace Spaces.
