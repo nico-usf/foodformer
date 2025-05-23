@@ -21,6 +21,17 @@ and the different visual interfaces to the model:
 
 <img src="./images/foodformer_interfaces.png" width="600" height="400" alt="Interfaces">
 
+## Step-by-step instructions
+
+The setup assumes that you already have an [AWS](https://aws.amazon.com/) account.
+
+1. Setup AWS Sagemaker following [this guide](./guides/AWS%20Sagemaker%20setup.pdf).
+2. Fine-tune an open-source Vision Transformer following [this tutorial](https://huggingface.co/blog/fine-tune-vit)
+3. Set up experiment tracking with Weights \& Biases following [this tutorial](https://docs.wandb.ai/quickstart/)
+4. Install [Docker Desktop](https://www.docker.com/) then run the inference API following [this guide](https://www.docker.com/blog/build-machine-learning-apps-with-hugging-faces-docker-spaces/)
+5. Deploy the API with Fargate following [those instructions](./guides/fargate/)
+6. Set up monitoring with Grafana with [this guide](./guides/grafana/)
+
 ## Development
 
 To setup this repo locally, run `./setup.sh`, it will simply install the dependencies and pre-commit hooks.
